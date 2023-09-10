@@ -8,34 +8,23 @@ class SinglyLinkedList:
     def __init__(self):
         self.head = None
 
-    def append(self, data):
-        if not self.head:
-            self.head = Node(data)
-            return
-        current = self.head
-        while current.next:
-            current = current.next
-        current.next = Node(data)
+    def push(self, data):
+        """Pushes a new node to the front of the list."""
+        new_node = Node(data)
+        new_node.next = self.head
+        self.head = new_node
 
-    def prepend(self, data):
-        p = Node(data)
-        p.next = self.head
-        self.head = p
-
-    def delete(self, data):
+    def pop(self):
+        """Pops the front node of the list."""
         if not self.head:
-            return
-        if self.head.data == data:
-            self.head = self.head.next
-            return
-        current = self.head
-        while current.next:
-            if current.next.data == data:
-                current.next = current.next.next
-                return
-            current = current.next
+            print("List is empty!")
+            return None
+        popped_data = self.head.data
+        self.head = self.head.next
+        return popped_data
 
     def add_after_value(self, target_data, new_data):
+        """Adds a node after a specific value."""
         if not self.head:
             return
         current = self.head
@@ -48,6 +37,7 @@ class SinglyLinkedList:
             current = current.next
 
     def display(self):
+        """Displays the list."""
         nodes = []
         current = self.head
         while current:
@@ -58,13 +48,12 @@ class SinglyLinkedList:
 
 # Test the SLL
 sll = SinglyLinkedList()
-sll.append(1)
-sll.append(2)
-sll.append(4)
+sll.push(4)
+sll.push(2)
+sll.push(1)
 sll.display()  # Outputs: 1 -> 2 -> 4
 
-sll.add_after_value(2, 3)
-sll.display()  # Outputs: 1 -> 2 -> 3 -> 4
+popped_value = sll.pop()
+print(f"Popped Value: {popped_value}")  # Outputs: Popped Value: 1
 
-sll.delete(2)
-sll.display()
+sll.display()  # Outputs: 2 -> 4
