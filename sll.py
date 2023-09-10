@@ -6,40 +6,39 @@ class Node:
 
 class SinglyLinkedList:
     def __init__(self):
-        self.head = None
+        self.dummy = Node("Dummy Node")  # This is the dummy node
+        self.head = self.dummy
 
     def push(self, data):
         """Pushes a new node to the front of the list."""
         new_node = Node(data)
-        new_node.next = self.head
-        self.head = new_node
+        new_node.next = self.head.next
+        self.head.next = new_node
 
     def pop(self):
         """Pops the front node of the list."""
-        if not self.head:
+        if not self.head.next:
             print("List is empty!")
             return None
-        popped_data = self.head.data
-        self.head = self.head.next
+        popped_data = self.head.next.data
+        self.head.next = self.head.next.next
         return popped_data
 
     def add_after_value(self, target_data, new_data):
         """Adds a node after a specific value."""
-        if not self.head:
-            return
         current = self.head
-        while current:
-            if current.data == target_data:
+        while current.next:
+            if current.next.data == target_data:
                 new_node = Node(new_data)
-                new_node.next = current.next
-                current.next = new_node
+                new_node.next = current.next.next
+                current.next.next = new_node
                 return
             current = current.next
 
     def display(self):
         """Displays the list."""
         nodes = []
-        current = self.head
+        current = self.head.next  # We start from the node after dummy node
         while current:
             nodes.append(current.data)
             current = current.next
